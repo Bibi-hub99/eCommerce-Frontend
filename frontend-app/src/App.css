@@ -1,0 +1,15 @@
+.invalid{
+    color:red;
+}
+
+.invalid::before{
+    content:'❌'
+}
+
+.valid{
+    color:green;
+}
+
+.valid::before{
+    content:"✅"
+}

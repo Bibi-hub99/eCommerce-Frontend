@@ -6,8 +6,10 @@ function Button(props){
             color:props.color,
             padding:props.padding,
             border:props.border,
-            display:props.display
-        }}>{props.innerText}</button>
+            display:props.display,
+            borderRadius:props.radius,
+            marginLeft:props.marginLeft
+        }} type={props.type} onClick={props.handleClick}>{props.innerText}</button>
     )
 }
 
