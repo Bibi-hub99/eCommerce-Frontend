@@ -6,6 +6,9 @@ import { MdFavorite } from "react-icons/md";
 import { FaCartPlus } from "react-icons/fa6";
 import { IoMdNotifications } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
+import { RiArrowGoBackFill } from "react-icons/ri";
+import { IoMdAdd } from "react-icons/io";
+
 
 const MyContext = createContext()
 
@@ -50,9 +53,28 @@ const contextValue = {
             url:'account'
         }
     ],
-    menuBars:<FaBars/>,
+    menuBars:<FaBars className={''}/>,
     searchIcon:<IoSearchOutline className={'inline'}/>,
     foodMenu:<IoFastFood/>,
+    backIcon:<RiArrowGoBackFill/>,
+    sellerLinks:[
+   
+        {
+            id:1,
+            url:'add-items',
+            title:<IoMdAdd/>
+        },
+        {
+            id:2,
+            url:'notifications',
+            title:<IoMdNotifications/>
+        },
+        {
+            id:3,
+            url:'account',
+            title:<FaUser/>
+        }
+    ],
     serviceTypes:[
         {
             id:1,
