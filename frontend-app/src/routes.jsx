@@ -47,30 +47,7 @@ const routes = createBrowserRouter([
                 ]
                 
             },
-            /*{
-                index:true,
-                element:<Home/>
-            },
-            {
-                path:'menu',
-                element:<h1>Menu</h1>
-            },
-            {
-                path:'favorites',
-                element:<h1>Favorites</h1>
-            },
-            {
-                path:'cart',
-                element:<h1>Cart</h1>
-            },
-            {
-                path:'notifications',
-                element:<h1>Notifications</h1>
-            },
-            {
-                path:'account',
-                element:<h1>Account</h1>
-            }*/
+    
         ]
     },
     {

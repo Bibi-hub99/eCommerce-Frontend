@@ -38,13 +38,14 @@ function Navigation(props){
         
 
         <DivTag>
-            <div className={'bg-white fixed top-0 w-full z-20'} style={{boxShadow:'2px 4px 2px lightgray'}}>
+            <div className={'bg-white fixed top-0 w-full'} style={{boxShadow:'2px 4px 2px lightgray',zIndex:'5'}}>
                 <div className={'py-3 box-border w-[98%] m-auto flex items-center'}>
                     {props.isHome && <div className={`md:hidden`}>
                         <Button
                         innerText={menuBars}
                         display={'block'}
-                        fontSize={'1.5rem'}/>
+                        fontSize={'1.5rem'}
+                        handleClick={props.handleClick}/>
                     </div>}
                     <div className={`${props.isHome ? 'ml-2':'ml-0'}`}>
                         <EatMoreHero/>{/**imported and is just a text which I used as a hero for my web app */}

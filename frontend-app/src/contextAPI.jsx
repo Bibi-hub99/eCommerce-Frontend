@@ -8,6 +8,7 @@ import { IoMdNotifications } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
+import { MdOutlineClear } from "react-icons/md";
 
 
 const MyContext = createContext()
@@ -57,6 +58,7 @@ const contextValue = {
     searchIcon:<IoSearchOutline className={'inline'}/>,
     foodMenu:<IoFastFood/>,
     backIcon:<RiArrowGoBackFill/>,
+    closeIcon:<MdOutlineClear/>,
     sellerLinks:[
    
         {

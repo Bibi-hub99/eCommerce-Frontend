@@ -6,7 +6,7 @@ import { FaStore } from "react-icons/fa";
 import {useMyContext} from '../contextAPI'
 import {NavLink} from 'react-router-dom'
 
-function SellerNav(){
+function SellerNav(props){
 
     const {menuBars,sellerLinks} = useMyContext()
 
@@ -26,6 +26,7 @@ function SellerNav(){
                         fontSize={'20px'}
                         type={'button'}
                         padding={'1px 0 0 0'}
+                        handleClick={props.handleClick}
                         innerText={menuBars}
                         />
                     </div>
