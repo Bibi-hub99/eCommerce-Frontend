@@ -28,7 +28,7 @@ function LogInForm(props){
                 <label className={''} style={inputClass2} htmlFor={'seller'}> Seller</label>
                 <br></br>
                 <br></br>
-                <button type={'submit'} className={'bg-black w-full p-3 rounded-lg text-white'}>continue</button>
+                <button type={'submit'} className={'bg-black w-full p-3 rounded-lg text-white'} onClick={props.handleContinue}>continue</button>
             </div>
         </div>
     )

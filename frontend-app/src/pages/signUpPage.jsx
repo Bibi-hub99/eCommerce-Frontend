@@ -2,6 +2,9 @@ import BlackNavBar from '../components/blackNavBar'
 import HistoryBackBtn from '../components/historyBackBtn'
 import SignUpForm from "../components/signUpForm"
 import { useState} from 'react'
+import {signUpPost} from '../CRUD/httpRequests'
+import SignUpResponse from '../components/signUpResponse'
+import axios from 'axios'
 
 function SignUpPage(){
 
@@ -11,12 +14,16 @@ function SignUpPage(){
         username:'',
         password:'',
         showPassword:false,
+        userType:''
     })  
 
     const [step1State,setStep1State] = useState(true)
     const [step2State,setStep2State] = useState(false)
     const [passFocused,setPassFocused] = useState(false)
-
+    const [formState,setFormState] = useState(true)
+    const [responseState,setResponseState] = useState(false)
+    const [postResponse,setPostResponse] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
     
     const handleNextStep = ()=>{
 
@@ -110,18 +117,64 @@ function SignUpPage(){
 
     }
 
+    function userTypeValidator(){
+        try{
+            if(userSignUpData.userType === ""){
+                throw "select user type"
+            }else{
+                return true
+            }
+        }catch(err){
+            alert(err)
+            return false
+        }
+    }
+
     const handlePrevState = ()=>{
         setStep2State(false)
         setStep1State(true)
     }
 
 
-    const handleContinue = (evt)=>{
-        evt.preventDefault()
-        if(userNameValidator() && passwordValidator()){
-            alert('good')
+    const handleContinue = async (evt)=>{
+
+        try{
+            evt.preventDefault()
+            if(userNameValidator() && passwordValidator() && userTypeValidator()){
+                setUserSignUpData({
+                    email:'',
+                    telephone:'',
+                    username:'',
+                    password:'',
+                    showPassword:'false',
+                    userType:''
+                })
+                const radio = document.getElementsByName('userType')
+                for(let i=0;i<radio.length;i++){
+                    radio[i].checked = false
+                }
+     
+                const {email,telephone,username,password,userType} = userSignUpData
+                setIsLoading(true)
+                const response = await signUpPost({
+                    email,
+                    telephone,
+                    username,
+                    password,
+                    userType
+                })
+                setIsLoading(false)
+                setPostResponse(response)
+                setFormState(false)
+                setResponseState(true)
+            }
+                
+        }catch(err){
+            console.log(err)
         }
     }
+
+    console.log(postResponse)
 
     const handleChange = (evt)=>{
         const {name,value,type,checked} = evt.target;
@@ -131,6 +184,12 @@ function SignUpPage(){
                 [name]:type === 'checkbox' ? checked:value
             }
         })
+    }
+
+    const tryAgain = ()=>{
+        setResponseState(false)
+        handlePrevState()
+        setFormState(true)
     }
 
     const focusPass = ()=>{
@@ -186,24 +245,34 @@ function SignUpPage(){
         <div>
             <BlackNavBar/>
             <div className={'mt-5'}>
-                <HistoryBackBtn/>
-                <SignUpForm 
-                step1State={step1State} 
-                step2State={step2State} 
-                handleNextStep={handleNextStep} 
-                handlePrevStep={handlePrevState}
-                handleChange={handleChange}
-                bannerShow={passFocused}
-                showBanner={focusPass}
-                hideBanner={blurPass}
-                handlePassTrack={passWordTracking}
-                handleContinue={handleContinue}
-                emailValue={userSignUpData.email}
-                telephoneValue={userSignUpData.telephone}
-                usernameValue={userSignUpData.username}
-                passwordValue={userSignUpData.password}
-                userType={userSignUpData.userType}
-                isChecked={userSignUpData.showPassword}/>
+                {formState && <div>
+                    <HistoryBackBtn/>
+                    <SignUpForm 
+                    step1State={step1State} 
+                    step2State={step2State} 
+                    handleNextStep={handleNextStep} 
+                    handlePrevStep={handlePrevState}
+                    handleChange={handleChange}
+                    bannerShow={passFocused}
+                    showBanner={focusPass}
+                    hideBanner={blurPass}
+                    handlePassTrack={passWordTracking}
+                    handleContinue={handleContinue}
+                    emailValue={userSignUpData.email}
+                    telephoneValue={userSignUpData.telephone}
+                    usernameValue={userSignUpData.username}
+                    passwordValue={userSignUpData.password}
+                    userType={userSignUpData.userType}
+                    isChecked={userSignUpData.showPassword}/>
+                </div>}
+                {isLoading && <h1>LOADING...</h1>}
+                {responseState &&
+                            <div className={'h-[80vh] ml-auto overflow-hidden top-[5%] flex flex-col justify-center'}>
+                                <div className={''}>
+                                    <SignUpResponse isSuccessful={postResponse} tryAgain={tryAgain}/>
+                                </div>
+                            </div>
+                }
             </div>
         </div>
     )

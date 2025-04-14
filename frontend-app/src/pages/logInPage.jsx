@@ -2,6 +2,9 @@ import LogInForm from '../components/logInForm'
 import {useState} from 'react'
 import BlackNavBar from '../components/blackNavBar'
 import HistoryBackBtn from '../components/historyBackBtn'
+import {logIn} from '../CRUD/httpRequests'
+import {useNavigate} from 'react-router-dom'
+
 function LogInPage(){
 
     //login page which renders the log in form imported
@@ -23,8 +26,58 @@ function LogInPage(){
         })
     }
 
+    const credentialsValidator = ()=>{
+        const {username,password,userType} = userCredentials
+        try{
+            if(username.trim()=="" || password.trim() ==""){
+                throw "fill all the details"
+            }else if(userType.trim()==""){
+                throw "select user type"
+            }
+            else{
+                return true
+            }
+        }catch(err){
+            alert(err)
+            return false
+        }
+    }
 
-    console.log(userCredentials)
+    const navigate = useNavigate()
+
+    const handleLogIn = async(evt)=>{
+        evt.preventDefault()
+        try{
+            const {username,password,userType} = userCredentials
+            if(credentialsValidator()){
+                const response = await logIn({
+                    username,
+                    password,
+                    userType
+                })
+                setUserCredentials({
+                    username:'',
+                    password:'',
+                    showPassword:false,
+                    userType:''
+                })
+                const userRadio = document.getElementsByName('userType')
+                for(let i=0;i<userRadio.length;i++){
+                    userRadio[i].checked = false
+                }
+                if(typeof(response) === 'object'){
+                    if(response.userType === 'buyer'){
+                        navigate("/logged-buyer")
+                    }else{
+                        navigate("/store")
+                    }
+                }
+                
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
 
     return (
         <div>
@@ -36,6 +89,7 @@ function LogInPage(){
                  <HistoryBackBtn/>
                 <form name={'logInForm'} autoComplete='off'>
                     <LogInForm handleChange={handleChange}
+                    handleContinue={handleLogIn}
                     formTitle={'Enter your log in details'} 
                     isChecked={userCredentials.showPassword} 
                     inputType1={'text'}
