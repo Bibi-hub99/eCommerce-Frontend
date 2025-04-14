@@ -10,6 +10,6 @@ function LogCarousel(props){
         </div>
     )
 
-}
+    }
 
 export default LogCarousel
