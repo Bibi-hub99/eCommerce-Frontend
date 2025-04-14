@@ -12,9 +12,6 @@ function Navigation(props){
 
     const {loggingLinks,menuBars,navLinks,foodMenu} = useMyContext()//destructuring logging links from the contextAPI to use as log in and sign up
 
-    const location = useLocation()
-    console.log(location)
-
     const loggingMaps = loggingLinks.map((each)=>{
         //mapping loggingLinks to create Link ButtonLink for each element,logging links is an array in contextAPI
        return <ButtonLink
@@ -38,10 +35,10 @@ function Navigation(props){
 
     return (
 
-        //fixed top-0
+        
 
         <DivTag>
-            <div className={'bg-white  w-full z-20'} style={{boxShadow:'2px 4px 2px lightgray'}}>
+            <div className={'bg-white fixed top-0 w-full z-20'} style={{boxShadow:'2px 4px 2px lightgray'}}>
                 <div className={'py-3 box-border w-[98%] m-auto flex items-center'}>
                     {props.isHome && <div className={`md:hidden`}>
                         <Button
