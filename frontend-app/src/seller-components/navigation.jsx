@@ -14,7 +14,8 @@ function SellerNav(props){
         padding:'1rem 0',
         width:'100%',
         position:'fixed',
-        top:'0'
+        top:'0',
+        zIndex:'5'
     }
 
     return (

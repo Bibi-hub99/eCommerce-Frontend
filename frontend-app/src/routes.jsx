@@ -8,6 +8,9 @@ const LazyLogIn = lazy(()=>import("./pages/logInPage"))
 const LazySignUp = lazy(()=>import("./pages/signUpPage"))
 const LazySellerLayout = lazy(()=>import("./seller-components/sellerLayOut"))
 const LazyLoggedUser = lazy(()=>import("./buyer-components/logged-user"))
+const LazySellerIndex = lazy(()=>import("./seller-components/storeIndex"))
+const LazyStore = lazy(()=>import("./seller-components/categoryRouting"))
+const LazyAddProduct = lazy(()=>import("./seller-components/addProdsForm"))
 
 const routes = createBrowserRouter([
     {
@@ -76,11 +79,29 @@ const routes = createBrowserRouter([
         children:[
             {
                 index:true,
-                element:<h1>INDEX</h1>
+                element:(
+                    <Suspense fallback={<div className={'text-5xl'}>Loading...</div>}>
+                        <LazySellerIndex/>
+                    </Suspense>
+                )
+            },
+            {
+        
+                path:'categories/:category',
+                element:(
+                <Suspense fallback={<div className={'text-5xl'}>Loading...</div>}>
+                        <LazyStore/>
+                </Suspense>
+                )
+        
             },
             {
                 path:'add-items',
-                element:<h1>ADD ITEMS</h1>
+                element:(
+                    <Suspense fallback={<div className={'text-5xl'}>Loading...</div>}>
+                        <LazyAddProduct/>
+                    </Suspense>
+                )
             },
             {
                 path:'notifications',
@@ -89,9 +110,10 @@ const routes = createBrowserRouter([
             {
                 path:'account',
                 element:<h1>ACCOUNT</h1>
-            }
+            },
         ]
-    }
+    },
+
 ])
 
 export default routes

@@ -54,11 +54,98 @@ const contextValue = {
             url:'account'
         }
     ],
+    categories:[
+        {
+            id:1,
+            title:'electronics',
+            url:'electronics'
+        },
+        {
+            id:2,
+            title:'cellphones',
+            url:'cellphones'
+        },
+        {
+            id:3,
+            title:'furniture',
+            url:'furniture'
+        },
+        {
+            id:4,
+            title:'groceries & beverages',
+            url:'groceries'
+        },
+        {
+            id:5,
+            title:'beverages',
+            url:'beverages'
+        },
+        {
+            id:6,
+            title:'babies',
+            url:'babies'
+        },
+        {
+            id:7,
+            title:'automotive',
+            url:'automotive'
+        },
+        {
+            id:8,
+            title:'essentials',
+            url:'essentials'
+        },
+        {
+            id:9,
+            title:'home appliances',
+            url:'home-applicances'
+        },
+        {
+            id:10,
+            title:'health & beauty',
+            url:'health-beauty'
+        },
+        {
+            id:11,
+            title:'sports',
+            url:'sports'
+        },
+        {
+            id:12,
+            title:'office, stationery',
+            url:'office-stationery'
+        },
+        {
+            id:13,
+            title:'pets',
+            url:'pets'
+        }
+    ],
     menuBars:<FaBars className={''}/>,
     searchIcon:<IoSearchOutline className={'inline'}/>,
     foodMenu:<IoFastFood/>,
     backIcon:<RiArrowGoBackFill/>,
     closeIcon:<MdOutlineClear/>,
+    sorterRadios:[
+        {
+            id:1,
+            name:'sorter',
+            value:'sort-by-price',
+            title:'sort by price'
+        },
+        {
+            id:2,
+            name:'sorter',
+            value:'sort-by-name',
+            title:'sort by name'
+        },
+        {
+            id:3,
+            name:'sorter',
+            value:'sort-by-relevance',
+            title:'sort by relevance'
+        }
+    ],
     sellerLinks:[
    
         {

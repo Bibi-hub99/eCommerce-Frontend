@@ -12,7 +12,7 @@ function PlayCarousel(){
         slidesToShow:1,
         slidesToScroll:1,
         autoplay:true,
-        autoplayspeed:2000
+        autoplayspeed:2000,
     }
 
     return (

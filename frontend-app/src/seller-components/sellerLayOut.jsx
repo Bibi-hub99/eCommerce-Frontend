@@ -33,10 +33,15 @@ function SellerLayout(){
         )
     })
 
+
     return (
         <div>
             <SellerNav handleClick={()=>setWidth('50%')}/>
-            <Outlet/>
+            <div style={{marginTop:'4.6rem'}} className={''}>
+                <Outlet/>
+            </div>
+            <div className={'mt-20'}>
+            </div>
             <SlideMenu width={width} handleClick={()=>setWidth('0')} navLinks={mobileLinksMap} indexLink={indexLink}/>
         </div>
     )
