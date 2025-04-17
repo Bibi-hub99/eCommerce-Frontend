@@ -1,11 +1,16 @@
 import CategorySlider from './categoriesSlider'
 import {useState} from "react"
 import {useMyContext} from "../contextAPI"
+import {useLoaderData} from "react-router-dom"
 
 function StoreIndex(){
 
+    const response = useLoaderData()
     const {sorterRadios} = useMyContext()
     const [sorter,setSorter] = useState("default")
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem("logged_in")))
+
+    console.log(response)
 
     const sortProducts = (evt)=>{
         const {value} = evt.target;

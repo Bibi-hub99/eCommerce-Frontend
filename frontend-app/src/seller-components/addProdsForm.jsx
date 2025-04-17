@@ -1,8 +1,7 @@
 import {useState} from 'react'
-import {useMyContext} from '../contextAPI'
 import { MdOutlineClear } from "react-icons/md";
 import {addProduct} from "../CRUD/httpRequests"
-
+import {useMyContext} from "../contextAPI"
 
 function TagComponent(props){
 
@@ -10,11 +9,15 @@ function TagComponent(props){
         <p className={'bg-gray-300 w-[19%] py-2 rounded-md inline overflow-hidden'}><MdOutlineClear className={'inline cursor-pointer hover:bg-white rounded-xl'} onClick={()=>props.handleClick(props.id)}/> {props.name}</p>
     )
 
+
 }
 
 function AddProductForm(props){
 
+    const [user,setUser] = useState(JSON.parse(localStorage.getItem("logged_in")))
+
     const [productData,setProductData] = useState({
+        sellerID:user.userID,
         product_name:'',
         product_price:'',
         product_category:'',
@@ -114,6 +117,7 @@ function AddProductForm(props){
                 }
 
                 const {
+                    sellerID,
                     product_name,product_price,product_category,
                     product_description,product_tags,product_in_stock,
                     product_available,product_on_sale,product_prev_price,
@@ -122,6 +126,7 @@ function AddProductForm(props){
                 } = productData
 
                 const response = await addProduct({
+                    sellerID,
                     product_name,product_price,product_category,
                     product_description,product_tags,product_in_stock,
                     product_available,product_on_sale,product_prev_price,
@@ -131,6 +136,20 @@ function AddProductForm(props){
 
                 console.log(response)
 
+                const radios = document.getElementsByName("product_available")
+                const checkBox1 = document.getElementsByName("product_delivery")
+                const checkBox2 = document.getElementsByName("product_pickUp")
+
+                for(let i=0;i<radios.length;i++){
+                    radios[i].checked = false
+                }
+                for(let i=0;i<checkBox1.length;i++){
+                    checkBox1[i].checked = !true
+                }
+                for(let i = 0;i<checkBox2.length;i++){
+                    checkBox2[i].checked = !true
+                }
+
 
                 setProductData((oldValue)=>{
                     return {
@@ -138,8 +157,8 @@ function AddProductForm(props){
                         product_description:'',product_tags:[],product_in_stock:'',
                         product_available:'',product_on_sale:'',product_prev_price:'',
                         product_main_image:'',product_imageURL2:'',product_imageURL3:'',
-                        product_imageURL4:'',product_date_relevance:'',product_delivery:'',
-                        product_pickUp:''
+                        product_imageURL4:'',product_date_relevance:'',product_delivery:false,
+                        product_pickUp:false
                     }
                 })            
             }
@@ -149,6 +168,8 @@ function AddProductForm(props){
             return false
         }
     }
+
+    console.log(productData)
 
     const handleTagAdd = ()=>{
         try{

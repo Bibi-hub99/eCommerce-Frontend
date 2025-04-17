@@ -2,7 +2,10 @@ import {createBrowserRouter} from 'react-router-dom'
 import {Suspense,lazy} from 'react'
 import Home from './pages/home'
 import Layout from "./layout"
+import {fetchBuyerProducts} from "./CRUD/httpRequests"
+import axios from "axios"
 
+import ViewProduct from './buyer-components/viewProduct'
 
 const LazyLogIn = lazy(()=>import("./pages/logInPage"))
 const LazySignUp = lazy(()=>import("./pages/signUpPage"))
@@ -11,6 +14,7 @@ const LazyLoggedUser = lazy(()=>import("./buyer-components/logged-user"))
 const LazySellerIndex = lazy(()=>import("./seller-components/storeIndex"))
 const LazyStore = lazy(()=>import("./seller-components/categoryRouting"))
 const LazyAddProduct = lazy(()=>import("./seller-components/addProdsForm"))
+const BuyerMenu = lazy(()=>import("./buyer-components/menu"))
 
 const routes = createBrowserRouter([
     {
@@ -31,16 +35,25 @@ const routes = createBrowserRouter([
                 children:[
 
                     {
+                        path:'menu',
+                        loader:fetchBuyerProducts,
+                        element:(
+                            <Suspense fallback={<div className={'text-5xl'}>Loading...</div>}>
+                                <BuyerMenu/>
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path:'menu/:id',
+                        element:<ViewProduct/>
+                    },
+                    {
                         path:'favorites',
                         element:<h1>Favorites</h1>
                     },
                     {
                         path:'cart',
                         element:<h1>Cart</h1>
-                    },
-                    {
-                        path:'notifications',
-                        element:<h1>Notifications</h1>
                     },
                     {
                         path:'account',
@@ -79,6 +92,16 @@ const routes = createBrowserRouter([
         children:[
             {
                 index:true,
+                loader:async()=>{
+                    try{
+                        const user = JSON.parse(localStorage.getItem('logged_in'))
+                        const {data} = await axios.get(`http://localhost:5000/store/${user.userID}`)
+                        return data
+                    }catch(err){
+                        console.log(err)
+                        return 'error'
+                }
+                },
                 element:(
                     <Suspense fallback={<div className={'text-5xl'}>Loading...</div>}>
                         <LazySellerIndex/>

@@ -20,6 +20,7 @@ export function useMyContext(){
 }
 
 const contextValue = {
+    loggedUser : JSON.parse(localStorage.getItem("logged_in")),
     loggingLinks:[
         {
             id:1,
@@ -35,18 +36,18 @@ const contextValue = {
     navLinks:[
         {
             id:1,
+            title:<IoFastFood/>,
+            url:'menu'
+        },
+        {
+            id:2,
             title:<MdFavorite/>,
             url:'favorites'
         },
         {
-            id:2,
+            id:3,
             title:<FaCartPlus/>,
             url:'cart'
-        },
-        {
-            id:3,
-            title:<IoMdNotifications/>,
-            url:'notifications'
         },
         {
             id:4,

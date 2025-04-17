@@ -55,6 +55,8 @@ function LogInPage(){
                     password,
                     userType
                 })
+
+
                 setUserCredentials({
                     username:'',
                     password:'',
@@ -66,16 +68,23 @@ function LogInPage(){
                     userRadio[i].checked = false
                 }
                 if(typeof(response) === 'object'){
-                    if(response.userType === 'buyer'){
-                        navigate("/logged-buyer")
+
+                    if(response.access === true){
+                        const userID = response._doc._id
+                        const userType = response._doc.userType
+                        const loggedUserDetails = JSON.stringify({userID,userType})
+                        localStorage.setItem('logged_in',loggedUserDetails)
+                        navigate(`/${response.pathTo}`)
                     }else{
-                        navigate("/store")
+                        throw "credentials do not match any account"
                     }
                 }
                 
             }
         }catch(err){
             console.log(err)
+            alert(err)
+            return false
         }
     }
 
